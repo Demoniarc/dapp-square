@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {squares.map((square) => (
-        <Link key={square.id} href={`/dashboard/${square.id}`}>
+        <Link key={square.id} href={`/form/${square.id}`}>
           <Card className="hover:bg-accent transition-colors">
             <CardHeader className="flex flex-row items-center space-x-4">
               <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-2xl">
