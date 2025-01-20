@@ -35,7 +35,6 @@ export default function FormPage() {
           .from('form')
           .select('feature, is_numerical')
           .eq('id', projectId)
-          .distinct()
 
         if (featuresError) throw featuresError
 
