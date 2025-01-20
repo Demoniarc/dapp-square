@@ -26,6 +26,8 @@ export default function FormPage() {
   const [fields, setFields] = useState<FormField[]>([])
   const [formData, setFormData] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
+  const [estimatedValue, setEstimatedValue] = useState<number | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const fetchFormFields = async () => {
@@ -81,8 +83,31 @@ export default function FormPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Form data:', formData)
-    // Implement submission logic here
+    setIsSubmitting(true)
+    
+    try {
+      // Construct the URL with query parameters
+      const baseUrl = `https://dubai-flat-price-estimation-api.onrender.com/${projectId}`
+      const queryParams = new URLSearchParams()
+      
+      // Add all form data to query parameters
+      Object.entries(formData).forEach(([key, value]) => {
+        queryParams.append(key, value)
+      })
+
+      const response = await fetch(`${baseUrl}?${queryParams.toString()}`)
+      
+      if (!response.ok) {
+        throw new Error('API request failed')
+      }
+
+      const result = await response.json()
+      setEstimatedValue(result)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (loading) {
@@ -130,9 +155,16 @@ export default function FormPage() {
                 )}
               </div>
             ))}
-            <Button type="submit" className="w-full">
-              Send
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send'}
             </Button>
+            {estimatedValue !== null && (
+              <div className="mt-4 text-center">
+                <p className="text-lg font-semibold">
+                  Property Estimated Value: {estimatedValue.toLocaleString()}
+                </p>
+              </div>
+            )}
           </form>
         </CardContent>
       </Card>
