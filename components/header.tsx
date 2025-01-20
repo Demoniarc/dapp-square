@@ -37,7 +37,7 @@ export default function Header() {
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center space-x-4">
               <img
-                src={theme === "dark" ? "/logo-light.svg" : "/logo-dark.svg"}
+                src={theme === "dark" ? "/logo-light.png" : "/logo-dark.png"}
                 alt="Logo Mopsos AI"
                 className="h-8 w-8 md:h-10 md:w-10"
               />
