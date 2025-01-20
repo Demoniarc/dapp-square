@@ -41,7 +41,7 @@ export default function Header() {
                 alt="Logo Mopsos AI"
                 className="h-8 w-8 md:h-10 md:w-10"
               />
-              <span className="text-xl font-bold md:text-2xl">Mopsos AI</span>
+              <span className="text-xl font-bold md:text-2xl">DApp Square</span>
             </Link>
             <div className="hidden md:block">
               <SearchBar />
@@ -49,18 +49,6 @@ export default function Header() {
           </div>
           <div className="flex items-center space-x-2 md:space-x-4">
             <div className="hidden md:flex items-center space-x-4">
-              <Link href="/dictionary" className="text-sm font-medium">
-                Data Dictionary
-              </Link>
-              <Link href="/api" className="text-sm font-medium">
-                API
-              </Link>
-              <Link href="/documentation" className="text-sm font-medium">
-                Documentation
-              </Link>
-              <Link href="/about" className="text-sm font-medium">
-                About Us
-              </Link>
               <Button
                 variant="outline"
                 size="icon"
@@ -98,18 +86,6 @@ export default function Header() {
               <SheetContent>
                 <div className="flex flex-col space-y-4 mt-4">
                   <SearchBar />
-                  <Link href="/dictionary" className="text-sm font-medium">
-                    Data Dictionary
-                  </Link>
-                  <Link href="/api" className="text-sm font-medium">
-                    API
-                  </Link>
-                  <Link href="/documentation" className="text-sm font-medium">
-                    Documentation
-                  </Link>
-                  <Link href="/about" className="text-sm font-medium">
-                    About Us
-                  </Link>
                   <Button
                     variant="outline"
                     size="sm"
