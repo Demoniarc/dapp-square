@@ -27,7 +27,7 @@ export default function Home() {
       try {
         // Fetch projects
         const { data: projectsData, error: projectsError } = await supabase
-          .from('project')
+          .from('square')
           .select('*')
 
         if (projectsError) throw projectsError
