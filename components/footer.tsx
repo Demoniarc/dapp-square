@@ -14,7 +14,7 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex items-center space-x-4">
             <Link 
-              href="https://x.com/mopsos_ai" 
+              href="https://x.com/x_ocean_foam" 
               target="_blank" 
               rel="noopener noreferrer"
             >
@@ -25,7 +25,7 @@ export default function Footer() {
               />
             </Link>
             <Link 
-              href="https://discord.gg/jHxTCBcg" 
+              href="https://discord.gg/a3dyaym3cZ" 
               target="_blank" 
               rel="noopener noreferrer"
             >
@@ -36,7 +36,7 @@ export default function Footer() {
               />
             </Link>
             <Link 
-              href="https://www.linkedin.com/company/mopsos-ai" 
+              href="https://www.linkedin.com/company/ocean-foam" 
               target="_blank" 
               rel="noopener noreferrer"
             >
@@ -50,30 +50,12 @@ export default function Footer() {
 
           {/* Action Buttons */}
           <div className="flex space-x-4">
-            <Button asChild>
-              <Link 
-                href="https://forms.gle/phzyWDEfKT3QeYLL8" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Data Request
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link 
-                href="https://forms.gle/phzyWDEfKT3QeYLL8" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Contact Us
-              </Link>
-            </Button>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="text-center text-sm text-muted-foreground mt-6">
-          © 2025 Mopsos AI — All Rights Reserved
+          © 2025 Ocean Foam — All Rights Reserved
         </div>
       </div>
     </footer>
