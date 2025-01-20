@@ -33,7 +33,7 @@ export default function FormPage() {
         // Fetch distinct features and their types
         const { data: featuresData, error: featuresError } = await supabase
           .from('form')
-          .select('feature, is_numerical')
+          .select('DISTINCT feature, is_numerical')
           .eq('id', projectId)
 
         if (featuresError) throw featuresError
