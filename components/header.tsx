@@ -39,7 +39,7 @@ export default function Header() {
               <img
                 src={theme === "dark" ? "/logo-light.png" : "/logo-dark.png"}
                 alt="Logo Mopsos AI"
-                className="h-8 w-12 md:h-10 md:w-15"
+                className="h-16 w-32 md:h-20 md:w-40"
               />
               <span className="text-xl font-bold md:text-2xl">DApp Square</span>
             </Link>
