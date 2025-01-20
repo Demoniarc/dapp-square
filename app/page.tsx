@@ -18,7 +18,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const { data: squaresData, error: squaresError } = await supabase
-          .from('data')
+          .from('project')
           .select('*')
 
         if (squaresError) throw squaresError
