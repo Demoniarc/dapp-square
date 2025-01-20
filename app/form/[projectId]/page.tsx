@@ -30,17 +30,17 @@ export default function FormPage() {
   useEffect(() => {
     const fetchFormFields = async () => {
       try {
-        // Fetch distinct features and their types
         const { data: featuresData, error: featuresError } = await supabase
           .from('form')
-          .select('DISTINCT feature, is_numerical')
-          .eq('id', projectId)
+          .select('feature, is_numerical')
+          .eq('id', projectId);
 
         if (featuresError) throw featuresError
 
-        // For each non-numerical feature, fetch possible values
+        const uniqueData = [...new Map(featuresData.map(item => [item.feature, item])).values()];
+
         const fieldsWithValues = await Promise.all(
-          featuresData.map(async (field) => {
+          uniqueData.map(async (field) => {
             if (!field.is_numerical) {
               const { data: valuesData, error: valuesError } = await supabase
                 .from('form')
@@ -60,9 +60,9 @@ export default function FormPage() {
         )
 
         setFields(fieldsWithValues)
-        setLoading(false)
       } catch (error) {
         console.error('Error fetching form fields:', error)
+      } finally {
         setLoading(false)
       }
     }
@@ -82,7 +82,7 @@ export default function FormPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Form data:', formData)
-    // Here you can implement the submission logic
+    // Implement submission logic here
   }
 
   if (loading) {
@@ -113,7 +113,7 @@ export default function FormPage() {
                   />
                 ) : (
                   <Select
-                    value={formData[field.feature]}
+                    value={formData[field.feature] || ''}
                     onValueChange={(value) => handleInputChange(field.feature, value)}
                   >
                     <SelectTrigger className="w-full">
