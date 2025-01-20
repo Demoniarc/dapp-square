@@ -17,7 +17,7 @@ import {
   CommandList,
 } from "@/components/ui/command"
 
-interface Project {
+interface Square {
   id: string
   name: string
   logo: string
@@ -25,11 +25,11 @@ interface Project {
 
 export function SearchBar() {
   const [open, setOpen] = useState(false)
-  const [projects, setProjects] = useState<Project[]>([])
+  const [squares, setSquares] = useState<Square[]>([])
   const router = useRouter()
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchSquares = async () => {
       try {
         const { data, error } = await supabase
           .from('square')
@@ -37,14 +37,14 @@ export function SearchBar() {
         
         if (error) throw error
         if (data) {
-          setProjects(data)
+          setSquares(data)
         }
       } catch (err) {
-        console.error('Error fetching projects:', err)
+        console.error('Error fetching squares:', err)
       }
     }
 
-    fetchProjects()
+    fetchSquares()
   }, [])
 
   useEffect(() => {
@@ -84,15 +84,15 @@ export function SearchBar() {
         <CommandList>
           <CommandEmpty>No result found.</CommandEmpty>
           <CommandGroup heading="Coins">
-            {projects.map((project) => (
+            {squares.map((square) => (
               <CommandItem
-                key={project.id}
-                onSelect={() => runCommand(() => router.push(`/dashboard/${project.id}`))}
+                key={square.id}
+                onSelect={() => runCommand(() => router.push(`/dashboard/${square.id}`))}
               >
                 <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                  {project.logo}
+                  {square.logo}
                 </div>
-                <span>{project.name}</span>
+                <span>{square.name}</span>
               </CommandItem>
             ))}
           </CommandGroup>
@@ -101,4 +101,3 @@ export function SearchBar() {
     </>
   )
 }
-
