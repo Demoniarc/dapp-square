@@ -32,7 +32,7 @@ export function SearchBar() {
     const fetchSquares = async () => {
       try {
         const { data, error } = await supabase
-          .from('square')
+          .from('project')
           .select('*')
         
         if (error) throw error
