@@ -87,7 +87,7 @@ export function SearchBar() {
             {squares.map((square) => (
               <CommandItem
                 key={square.id}
-                onSelect={() => runCommand(() => router.push(`/dashboard/${square.id}`))}
+                onSelect={() => runCommand(() => router.push(`/form/${square.id}`))}
               >
                 <div className="mr-2 flex h-4 w-4 items-center justify-center">
                   {square.logo}
