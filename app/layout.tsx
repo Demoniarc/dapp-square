@@ -10,10 +10,10 @@ import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Mopsos AI",
-  description: "Most advanced crypto social data.",
+  title: "Dapp Square",
+  description: "Ocean Foam - Dapp Square",
   icons: {
-    icon: '/logo-dark.svg'
+    icon: '/logo-dark.png'
   }
 }
 
