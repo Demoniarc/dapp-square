@@ -80,10 +80,10 @@ export function SearchBar() {
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search a coin..." />
+        <CommandInput placeholder="Search a model ..." />
         <CommandList>
           <CommandEmpty>No result found.</CommandEmpty>
-          <CommandGroup heading="Coins">
+          <CommandGroup heading="Model">
             {squares.map((square) => (
               <CommandItem
                 key={square.id}
