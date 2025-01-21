@@ -118,7 +118,7 @@ export default function FormPage() {
     <div className="container mx-auto px-4 py-8">
       <Card>
         <CardHeader>
-          <CardTitle>Project Form</CardTitle>
+          <CardTitle>Dubai - Property Price Estimation Model</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -156,7 +156,7 @@ export default function FormPage() {
               </div>
             ))}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Send'}
+              {isSubmitting ? 'Loading...' : 'Estimate'}
             </Button>
             {estimatedValue !== null && (
               <div className="mt-4 text-center">
