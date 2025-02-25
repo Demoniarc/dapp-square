@@ -52,8 +52,8 @@ export default function FormPage() {
         const { data, error } = await supabase.rpc('execute_sql', {
           query: `
               SELECT 
-                  DATE_TRUNC('month', date)::date AS month,  -- Convertir en date
-                  SUM(price) / NULLIF(SUM(transaction_size), 0) AS average_square_meter
+                  DATE_TRUNC('month', date)::date AS month, 
+                  (SUM(price) / NULLIF(SUM(transaction_size), 0))::numeric AS average_square_meter
               FROM data
               GROUP BY month
               ORDER BY month ASC;
