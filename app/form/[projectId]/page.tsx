@@ -49,12 +49,16 @@ export default function FormPage() {
   useEffect(() => {
     const fetchPriceHistory = async () => {
       try {
-        const { data, error } = await supabase.from('data')
-          .select(`
-            month:date_trunc('month', date)::date,
-            average_square_meter:price/nullif(transaction_size, 0)
-          `)
-          .order('month', { ascending: true })
+        const { data, error } = await supabase.rpc('execute_sql', {
+          query: `
+            SELECT 
+              DATE_TRUNC('month', date) AS month,
+              SUM(price) / NULLIF(SUM(transaction_size), 0) AS average_square_meter
+            FROM data
+            GROUP BY month
+            ORDER BY month ASC
+          `
+        })
 
         if (error) throw error
 
