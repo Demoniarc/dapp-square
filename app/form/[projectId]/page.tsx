@@ -13,12 +13,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { supabase } from "@/lib/supabase"
+import { format } from "date-fns"
 
 interface FormField {
   feature: string
   is_numerical: boolean
   values?: string[]
+}
+
+interface PriceHistory {
+  month: string
+  average_square_meter: number
 }
 
 export default function FormPage() {
@@ -28,6 +44,33 @@ export default function FormPage() {
   const [loading, setLoading] = useState(true)
   const [estimatedValue, setEstimatedValue] = useState<number | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [priceHistory, setPriceHistory] = useState<PriceHistory[]>([])
+
+  useEffect(() => {
+    const fetchPriceHistory = async () => {
+      try {
+        const { data, error } = await supabase.from('data')
+          .select(`
+            month:date_trunc('month', date)::date,
+            average_square_meter:price/nullif(transaction_size, 0)
+          `)
+          .order('month', { ascending: true })
+
+        if (error) throw error
+
+        const formattedData = data.map(item => ({
+          month: format(new Date(item.month), 'MMM yyyy'),
+          average_square_meter: Number(item.average_square_meter.toFixed(2))
+        }))
+
+        setPriceHistory(formattedData)
+      } catch (error) {
+        console.error('Error fetching price history:', error)
+      }
+    }
+
+    fetchPriceHistory()
+  }, [])
 
   useEffect(() => {
     const fetchFormFields = async () => {
@@ -86,11 +129,9 @@ export default function FormPage() {
     setIsSubmitting(true)
     
     try {
-      // Construct the URL with query parameters
       const baseUrl = `https://dubai-flat-price-estimation-api.onrender.com/${projectId}`
       const queryParams = new URLSearchParams()
       
-      // Add all form data to query parameters
       Object.entries(formData).forEach(([key, value]) => {
         queryParams.append(key, value)
       })
@@ -115,7 +156,40 @@ export default function FormPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Price History</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="h-[400px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={priceHistory}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="month"
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(value) => `${value.toLocaleString()} AED`}
+                />
+                <Tooltip
+                  formatter={(value: number) => [`${value.toLocaleString()} AED`, 'Average Price/m²']}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="average_square_meter"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Dubai - Property Price Estimation Model</CardTitle>
